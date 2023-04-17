@@ -53,24 +53,31 @@ namespace WebApplication1.Controllers
 
         [HttpGet]
         [Route("api/patientCard/{patientId}")]
-        public PatientDTO GetPatientByPatienttId(string patientId)
+        public IHttpActionResult GetPatientByPatienttId(string patientId)
         {
-            safePlaceDbContext db = new safePlaceDbContext();
-            PatientDTO patient = db.TblPatients
-                .Where(p => p.Patient_Id == patientId)
-                .Select(p => new PatientDTO()
-                {
-                    patientId = p.Patient_Id,
-                    FirstName = p.FirstName,
-                    LastName = p.LastName,
-                    Email = p.TblUser.Email,
-                    Age = DateTime.Now.Year - p.BirthDate.Year,
-                    NumTreatments = p.TblUser.TblTreats.Count(),
-                    phoneNumber = p.PhoneNumber
-                })
-                .SingleOrDefault();
+            try
+            {
+                safePlaceDbContext db = new safePlaceDbContext();
+                PatientDTO patient = db.TblPatients
+                    .Where(p => p.Patient_Id == patientId)
+                    .Select(p => new PatientDTO()
+                    {
+                        patientId = p.Patient_Id,
+                        FirstName = p.FirstName,
+                        LastName = p.LastName,
+                        Email = p.TblUser.Email,
+                        Age = DateTime.Now.Year - p.BirthDate.Year,
+                        NumTreatments = p.TblUser.TblTreats.Count(),
+                        phoneNumber = p.PhoneNumber
+                    })
+                    .SingleOrDefault();
 
-            return patient;
+                return Ok (patient);
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex);
+            }
         }
 
         // POST: api/Patient
