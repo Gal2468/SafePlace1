@@ -88,6 +88,27 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("api/patientstreatment/{id}")]
+        public List<TreatmentDto> GetAllPatientTreatments(string id)
+        {
+            safePlaceDbContext db = new safePlaceDbContext();
+
+            List<TreatmentDto> treatment = db.TblTreatments.Where(o => o.TblTreats.Any(y => y.Patient_Id == id)).Where(c => c.TreatmentDate > DateTime.Today).
+                Select(p => new TreatmentDto()
+                {
+                    Treatment_Id = p.Treatment_Id,
+                    WasDone = p.WasDone,
+                    TType_Id = p.TType_Id,
+                    Room_Num = p.Room_Num,
+                    TreatmentDate = (DateTime)p.TreatmentDate,
+                    StartTime = (DateTime)p.StartTime,
+                    EndTime = (DateTime)p.EndTime
+                }).ToList();
+
+            return treatment;
+        }
+
         // POST: api/Patient
         public void Post([FromBody]string value)
         {

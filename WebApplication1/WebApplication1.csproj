@@ -220,10 +220,13 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\TherapistController.cs" />
+    <Compile Include="Controllers\TreatmentController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DTO\PatientDTO.cs" />
     <Compile Include="DTO\SummaryDTO.cs" />
     <Compile Include="DTO\TherapistDTO.cs" />
+    <Compile Include="DTO\TreatmentDto.cs" />
+    <Compile Include="DTO\TreatssDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
