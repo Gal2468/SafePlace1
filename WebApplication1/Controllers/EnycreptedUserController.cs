@@ -15,13 +15,15 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.SessionState;
+using ClassLibrary2;
+using WebApplication1.DTO;
 
 namespace ClinicWebApplication.DTO
 {
     [RoutePrefix("api/SignInUser")]
     public class EnycreptedUserController : ApiController
     {
-        ClinicEntitiesDB db = new ClinicEntitiesDB();
+        safePlaceDbContext db = new safePlaceDbContext();
         public static string EncryptPassword1(string password)
         {
             if (string.IsNullOrEmpty(password))
@@ -69,7 +71,7 @@ namespace ClinicWebApplication.DTO
         {
             try
             {
-                using (var db = new ClinicEntitiesDB())
+                using (var db = new safePlaceDbContext())
                 {
                     string modelGender = "";
 
@@ -92,13 +94,13 @@ namespace ClinicWebApplication.DTO
 
 
                     };
-                    db.TblPatient.Add(newPatient);
+                    db.TblPatients.Add(newPatient);
                     db.SaveChanges();
 
                 }
-                using (var db = new ClinicEntitiesDB())
+                using (var db = new safePlaceDbContext())
                 {
-                    var newUser = new TblUsers
+                    var newUser = new TblUser
                     {
                         Email = model.email,
                         Password = EncryptPassword(model.password),
@@ -127,7 +129,7 @@ namespace ClinicWebApplication.DTO
         [Route("login")]
         public HttpContext Login([FromBody] DecryptUserDTO model, HttpContext context)
         {
-            using (var db = new ClinicEntitiesDB())
+            using (var db = new safePlaceDbContext())
             {
                 var hasdedPassword = db.TblUsers.FirstOrDefault(u => u.Email == model.email);
                 string hasded = hasdedPassword.Password;
