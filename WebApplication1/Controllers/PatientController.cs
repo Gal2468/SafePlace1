@@ -33,22 +33,30 @@ namespace WebApplication1.Controllers
 
         [HttpGet]
         [Route("api/patient/{therapistId}")]
-        public List<PatientDTO> GetPatientsByTherapistId(string therapistId)
+        public IHttpActionResult GetPatientsByTherapistId(string therapistId)
         {
-            safePlaceDbContext db = new safePlaceDbContext();
-            List<PatientDTO> patients = db.TblPatients
-                .Where(p => p.TblUser.TblTreats.Any(t => t.Therapist_Id == therapistId))
-                .Select(p => new PatientDTO()
-                {
-                    patientId = p.Patient_Id,
-                    FirstName = p.FirstName,
-                    LastName = p.LastName,
-                    TherapistFirstName = p.TblUser.TblTreats.FirstOrDefault(t => t.Therapist_Id == therapistId).TblTherapist.FirstName,
-                    TherapistLastName = p.TblUser.TblTreats.FirstOrDefault(t => t.Therapist_Id == therapistId).TblTherapist.LastName
-                })
-                .ToList();
+            try
+            {
+                safePlaceDbContext db = new safePlaceDbContext();
+                List<PatientDTO> patients = db.TblPatients
+                    .Where(p => p.TblUser.TblTreats.Any(t => t.Therapist_Id == therapistId))
+                    .Select(p => new PatientDTO()
+                    {
+                        patientId = p.Patient_Id,
+                        FirstName = p.FirstName,
+                        LastName = p.LastName,
+                        TherapistFirstName = p.TblUser.TblTreats.FirstOrDefault(t => t.Therapist_Id == therapistId).TblTherapist.FirstName,
+                        TherapistLastName = p.TblUser.TblTreats.FirstOrDefault(t => t.Therapist_Id == therapistId).TblTherapist.LastName
+                    })
+                    .ToList();
 
-            return patients;
+                return Ok(patients);
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex);
+            }
+            
         }
 
         [HttpGet]

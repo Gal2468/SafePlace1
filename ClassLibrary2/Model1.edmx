@@ -4,17 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="safePlace1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
+      <Schema Namespace="SafePlaceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="TblFile">
           <Key>
             <PropertyRef Name="File_Num" />
@@ -50,7 +40,7 @@
           <Property Name="BirthDate" Type="date" Nullable="false" />
           <Property Name="StartDate" Type="date" Nullable="false" />
           <Property Name="Gender" Type="char" MaxLength="1" />
-          <Property Name="PhoneNumber" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="TblPractices">
           <Key>
@@ -74,6 +64,7 @@
           <Property Name="WrittenBy" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="Content" Type="nvarchar" MaxLength="300" Nullable="false" />
           <Property Name="Summary_Date" Type="date" Nullable="false" />
+          <Property Name="ImportanttoNote" Type="nvarchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="TblTherapist">
           <Key>
@@ -92,12 +83,12 @@
             <PropertyRef Name="Treatment_Id" />
           </Key>
           <Property Name="Treatment_Id" Type="int" Nullable="false" />
-          <Property Name="Treatment_Date" Type="date" Nullable="false" />
-          <Property Name="StartTime" Type="int" Nullable="false" />
-          <Property Name="EndTime" Type="int" Nullable="false" />
           <Property Name="WasDone" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="TType_Id" Type="int" Nullable="false" />
           <Property Name="Room_Num" Type="int" Nullable="false" />
+          <Property Name="TreatmentDate" Type="date" />
+          <Property Name="StartTime" Type="datetime" />
+          <Property Name="EndTime" Type="datetime" />
         </EntityType>
         <EntityType Name="TblTreats">
           <Key>
@@ -127,7 +118,7 @@
           <Property Name="IsSuperUser" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'safePlace1.dbo.TblWrittenFor' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'SafePlace.dbo.TblWrittenFor' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TblWrittenFor">
           <Key>
             <PropertyRef Name="Summary_Num" />
@@ -292,8 +283,7 @@ warning 6002: The table/view 'safePlace1.dbo.TblWrittenFor' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="safePlace1ModelStoreContainer">
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+        <EntityContainer Name="SafePlaceModelStoreContainer">
           <EntitySet Name="TblFile" EntityType="Self.TblFile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblFileType" EntityType="Self.TblFileType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblFills" EntityType="Self.TblFills" Schema="dbo" store:Type="Tables" />
@@ -369,17 +359,7 @@ warning 6002: The table/view 'safePlace1.dbo.TblWrittenFor' does not have a prim
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="safePlace1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
+      <Schema Namespace="SafePlaceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="TblFile">
           <Key>
             <PropertyRef Name="File_Num" />
@@ -410,7 +390,7 @@ warning 6002: The table/view 'safePlace1.dbo.TblWrittenFor' does not have a prim
           <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TblUser" Relationship="Self.fk13" FromRole="TblPatient" ToRole="TblUsers" />
         </EntityType>
         <EntityType Name="TblRoom">
@@ -428,6 +408,7 @@ warning 6002: The table/view 'safePlace1.dbo.TblWrittenFor' does not have a prim
           <Property Name="WrittenBy" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Content" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Summary_Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ImportanttoNote" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TblTreatments" Relationship="Self.TblWrittenFor" FromRole="TblSummary" ToRole="TblTreatment" />
         </EntityType>
         <EntityType Name="TblTherapist">
@@ -449,12 +430,12 @@ warning 6002: The table/view 'safePlace1.dbo.TblWrittenFor' does not have a prim
             <PropertyRef Name="Treatment_Id" />
           </Key>
           <Property Name="Treatment_Id" Type="Int32" Nullable="false" />
-          <Property Name="Treatment_Date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="StartTime" Type="Int32" Nullable="false" />
-          <Property Name="EndTime" Type="Int32" Nullable="false" />
           <Property Name="WasDone" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="TType_Id" Type="Int32" Nullable="false" />
           <Property Name="Room_Num" Type="Int32" Nullable="false" />
+          <Property Name="TreatmentDate" Type="DateTime" Precision="0" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="TblRoom" Relationship="Self.fk7" FromRole="TblTreatment" ToRole="TblRoom" />
           <NavigationProperty Name="TblTreats" Relationship="Self.fk11" FromRole="TblTreatment" ToRole="TblTreats" />
           <NavigationProperty Name="TblType" Relationship="Self.fk6" FromRole="TblTreatment" ToRole="TblType" />
@@ -592,7 +573,6 @@ warning 6002: The table/view 'safePlace1.dbo.TblWrittenFor' does not have a prim
           <End Role="TblTreatment" Type="Self.TblTreatment" Multiplicity="*" />
         </Association>
         <EntityContainer Name="safePlaceDbContext" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="TblFiles" EntityType="Self.TblFile" />
           <EntitySet Name="TblFileTypes" EntityType="Self.TblFileType" />
           <EntitySet Name="TblPatients" EntityType="Self.TblPatient" />
@@ -649,20 +629,9 @@ warning 6002: The table/view 'safePlace1.dbo.TblWrittenFor' does not have a prim
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="safePlace1ModelStoreContainer" CdmEntityContainer="safePlaceDbContext">
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="safePlace1Model.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+        <EntityContainerMapping StorageEntityContainer="SafePlaceModelStoreContainer" CdmEntityContainer="safePlaceDbContext">
           <EntitySetMapping Name="TblFiles">
-            <EntityTypeMapping TypeName="safePlace1Model.TblFile">
+            <EntityTypeMapping TypeName="SafePlaceModel.TblFile">
               <MappingFragment StoreEntitySet="TblFile">
                 <ScalarProperty Name="File_Num" ColumnName="File_Num" />
                 <ScalarProperty Name="DateSent" ColumnName="DateSent" />
@@ -672,7 +641,7 @@ warning 6002: The table/view 'safePlace1.dbo.TblWrittenFor' does not have a prim
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TblFileTypes">
-            <EntityTypeMapping TypeName="safePlace1Model.TblFileType">
+            <EntityTypeMapping TypeName="SafePlaceModel.TblFileType">
               <MappingFragment StoreEntitySet="TblFileType">
                 <ScalarProperty Name="FileType_Num" ColumnName="FileType_Num" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
@@ -681,7 +650,7 @@ warning 6002: The table/view 'safePlace1.dbo.TblWrittenFor' does not have a prim
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TblPatients">
-            <EntityTypeMapping TypeName="safePlace1Model.TblPatient">
+            <EntityTypeMapping TypeName="SafePlaceModel.TblPatient">
               <MappingFragment StoreEntitySet="TblPatient">
                 <ScalarProperty Name="Patient_Id" ColumnName="Patient_Id" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -694,24 +663,25 @@ warning 6002: The table/view 'safePlace1.dbo.TblWrittenFor' does not have a prim
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TblRooms">
-            <EntityTypeMapping TypeName="safePlace1Model.TblRoom">
+            <EntityTypeMapping TypeName="SafePlaceModel.TblRoom">
               <MappingFragment StoreEntitySet="TblRoom">
                 <ScalarProperty Name="Room_Num" ColumnName="Room_Num" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TblSummaries">
-            <EntityTypeMapping TypeName="safePlace1Model.TblSummary">
+            <EntityTypeMapping TypeName="SafePlaceModel.TblSummary">
               <MappingFragment StoreEntitySet="TblSummary">
                 <ScalarProperty Name="Summary_Num" ColumnName="Summary_Num" />
                 <ScalarProperty Name="WrittenBy" ColumnName="WrittenBy" />
                 <ScalarProperty Name="Content" ColumnName="Content" />
                 <ScalarProperty Name="Summary_Date" ColumnName="Summary_Date" />
+                <ScalarProperty Name="ImportanttoNote" ColumnName="ImportanttoNote" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TblTherapists">
-            <EntityTypeMapping TypeName="safePlace1Model.TblTherapist">
+            <EntityTypeMapping TypeName="SafePlaceModel.TblTherapist">
               <MappingFragment StoreEntitySet="TblTherapist">
                 <ScalarProperty Name="Therapist_Id" ColumnName="Therapist_Id" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -724,20 +694,20 @@ warning 6002: The table/view 'safePlace1.dbo.TblWrittenFor' does not have a prim
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TblTreatments">
-            <EntityTypeMapping TypeName="safePlace1Model.TblTreatment">
+            <EntityTypeMapping TypeName="SafePlaceModel.TblTreatment">
               <MappingFragment StoreEntitySet="TblTreatment">
                 <ScalarProperty Name="Treatment_Id" ColumnName="Treatment_Id" />
-                <ScalarProperty Name="Treatment_Date" ColumnName="Treatment_Date" />
-                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
                 <ScalarProperty Name="WasDone" ColumnName="WasDone" />
                 <ScalarProperty Name="TType_Id" ColumnName="TType_Id" />
                 <ScalarProperty Name="Room_Num" ColumnName="Room_Num" />
+                <ScalarProperty Name="TreatmentDate" ColumnName="TreatmentDate" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TblTreats">
-            <EntityTypeMapping TypeName="safePlace1Model.TblTreat">
+            <EntityTypeMapping TypeName="SafePlaceModel.TblTreat">
               <MappingFragment StoreEntitySet="TblTreats">
                 <ScalarProperty Name="Patient_Id" ColumnName="Patient_Id" />
                 <ScalarProperty Name="Treatment_Id" ColumnName="Treatment_Id" />
@@ -746,7 +716,7 @@ warning 6002: The table/view 'safePlace1.dbo.TblWrittenFor' does not have a prim
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TblTypes">
-            <EntityTypeMapping TypeName="safePlace1Model.TblType">
+            <EntityTypeMapping TypeName="SafePlaceModel.TblType">
               <MappingFragment StoreEntitySet="TblType">
                 <ScalarProperty Name="TType_Id" ColumnName="TType_Id" />
                 <ScalarProperty Name="TType_Name" ColumnName="TType_Name" />
@@ -755,7 +725,7 @@ warning 6002: The table/view 'safePlace1.dbo.TblWrittenFor' does not have a prim
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TblUsers">
-            <EntityTypeMapping TypeName="safePlace1Model.TblUser">
+            <EntityTypeMapping TypeName="SafePlaceModel.TblUser">
               <MappingFragment StoreEntitySet="TblUsers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -765,7 +735,7 @@ warning 6002: The table/view 'safePlace1.dbo.TblWrittenFor' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="TblFills" TypeName="safePlace1Model.TblFills" StoreEntitySet="TblFills">
+          <AssociationSetMapping Name="TblFills" TypeName="SafePlaceModel.TblFills" StoreEntitySet="TblFills">
             <EndProperty Name="TblUsers">
               <ScalarProperty Name="Patient_Id" ColumnName="Patient_Id" />
             </EndProperty>
@@ -773,7 +743,7 @@ warning 6002: The table/view 'safePlace1.dbo.TblWrittenFor' does not have a prim
               <ScalarProperty Name="File_Num" ColumnName="File_Num" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="TblPractices" TypeName="safePlace1Model.TblPractices" StoreEntitySet="TblPractices">
+          <AssociationSetMapping Name="TblPractices" TypeName="SafePlaceModel.TblPractices" StoreEntitySet="TblPractices">
             <EndProperty Name="TblTherapist">
               <ScalarProperty Name="Therapist_Id" ColumnName="Therapist_Id" />
             </EndProperty>
@@ -781,7 +751,7 @@ warning 6002: The table/view 'safePlace1.dbo.TblWrittenFor' does not have a prim
               <ScalarProperty Name="TType_Id" ColumnName="TType_Id" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="TblWrittenFor" TypeName="safePlace1Model.TblWrittenFor" StoreEntitySet="TblWrittenFor">
+          <AssociationSetMapping Name="TblWrittenFor" TypeName="SafePlaceModel.TblWrittenFor" StoreEntitySet="TblWrittenFor">
             <EndProperty Name="TblSummary">
               <ScalarProperty Name="Summary_Num" ColumnName="Summary_Num" />
             </EndProperty>

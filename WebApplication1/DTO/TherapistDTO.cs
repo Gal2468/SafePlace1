@@ -10,9 +10,9 @@ namespace WebApplication1.DTO
         public string Therapist_Id;
         public string FirstName;
         public string LastName;
-        public DateTime Treatment_Date;
-        public int StartTime;
-        public int EndTime;
+        public Nullable<System.DateTime> Treatment_Date;
+        public Nullable<System.DateTime> StartTime;
+        public Nullable<System.DateTime> EndTime;
         public string WasDone;
         public int Room_Num;
         public string PatientFirstName;

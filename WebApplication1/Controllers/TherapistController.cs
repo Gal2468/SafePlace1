@@ -11,6 +11,7 @@ namespace WebApplication1.Controllers
 {
     public class TherapistController : ApiController
     {
+
         // GET: api/Therapist
         public IEnumerable<string> Get()
         {
@@ -23,13 +24,13 @@ namespace WebApplication1.Controllers
         public List<TherapistDTO> Get(string id)
         {
             safePlaceDbContext db = new safePlaceDbContext();
-            List <TherapistDTO> listMeeting = db.TblTreats.Where(a => a.Therapist_Id == id && a.TblTreatment.Treatment_Date == DateTime.Today)
+            List<TherapistDTO> listMeeting = db.TblTreats.Where(a => a.Therapist_Id == id && a.TblTreatment.TreatmentDate == DateTime.Today)
             .Select(x => new TherapistDTO
             {
                 Therapist_Id = x.Therapist_Id,
                 FirstName = x.TblTherapist.FirstName,
                 LastName = x.TblTherapist.LastName,
-                Treatment_Date = x.TblTreatment.Treatment_Date,
+                Treatment_Date = x.TblTreatment.TreatmentDate,
                 StartTime = x.TblTreatment.StartTime,
                 EndTime = x.TblTreatment.EndTime,
                 Room_Num = x.TblTreatment.Room_Num,
@@ -49,14 +50,35 @@ namespace WebApplication1.Controllers
             }
         }
 
+
         // POST: api/Therapist
-        public void Post([FromBody]string value)
+        [HttpPost]
+        [Route("api/PostSummary")]
+        public IHttpActionResult Post([FromBody] TblSummary value)
         {
-            
+            safePlaceDbContext db = new safePlaceDbContext();
+            try
+            {
+                TblSummary newSummary = new TblSummary();
+                newSummary.Summary_Num = value.Summary_Num;
+                newSummary.WrittenBy = value.WrittenBy;
+                newSummary.Content = value.Content;
+                newSummary.Summary_Date = value.Summary_Date;
+                newSummary.ImportanttoNote = value.ImportanttoNote;
+                newSummary.TblTreatments = new List<TblTreatment> ();
+                db.TblSummaries.Add(newSummary);
+                db.SaveChanges();
+                return Ok("Save");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
+
         // PUT: api/Therapist/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody] string value)
         {
         }
 
