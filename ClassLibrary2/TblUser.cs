@@ -14,23 +14,9 @@ namespace ClassLibrary2
     
     public partial class TblUser
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TblUser()
-        {
-            this.TblTreats = new HashSet<TblTreat>();
-            this.TblFiles = new HashSet<TblFile>();
-        }
-    
         public int Id { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public string Patient_Id { get; set; }
-        public bool IsSuperUser { get; set; }
-    
-        public virtual TblPatient TblPatient { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TblTreat> TblTreats { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TblFile> TblFiles { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

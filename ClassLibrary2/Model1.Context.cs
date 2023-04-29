@@ -13,10 +13,10 @@ namespace ClassLibrary2
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class safePlaceDbContext : DbContext
+    public partial class SafePlaceDbContext : DbContext
     {
-        public safePlaceDbContext()
-            : base("name=safePlaceDbContext")
+        public SafePlaceDbContext()
+            : base("name=SafePlaceDbContext")
         {
         }
     
@@ -25,6 +25,7 @@ namespace ClassLibrary2
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TblFile> TblFiles { get; set; }
         public virtual DbSet<TblFileType> TblFileTypes { get; set; }
         public virtual DbSet<TblPatient> TblPatients { get; set; }

@@ -14,14 +14,25 @@ namespace ClassLibrary2
     
     public partial class TblPatient
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TblPatient()
+        {
+            this.TblTreats = new HashSet<TblTreat>();
+            this.TblFiles = new HashSet<TblFile>();
+        }
+    
         public string Patient_Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public System.DateTime BirthDate { get; set; }
-        public System.DateTime StartDate { get; set; }
+        public Nullable<System.DateTime> BirthDate { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
         public string Gender { get; set; }
         public string PhoneNumber { get; set; }
+        public string Email { get; set; }
     
-        public virtual TblUser TblUser { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TblTreat> TblTreats { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TblFile> TblFiles { get; set; }
     }
 }
